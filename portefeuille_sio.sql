@@ -272,8 +272,67 @@ INSERT INTO `competence` (`id`, `activite`, `code`, `libelle`) VALUES
 (157, 57, 'C3.2.3.1', 'Repérer les éléments de la documentation à mettre à jour'),
 (158, 57, 'C3.2.3.2', 'Mettre à jour la documentation');
 
+
 --
--- Index pour les tables déchargées
+-- Structure de la table `competence_acquise`
+--
+
+CREATE TABLE `competence_acquise` (
+  `id` int(11) NOT NULL,
+  `times` int(11) NOT NULL,
+  `texte` text NOT NULL,
+  `competence` int(11) NOT NULL,
+  `lieu` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Structure de la table `competence_lieu`
+--
+
+CREATE TABLE `competence_lieu` (
+  `id` int(11) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
+  `libelle_min` varchar(5) NOT NULL,
+  `info` varchar(255) NOT NULL,
+  `contexte` text NOT NULL,
+  `projet` text NOT NULL,
+  `objectif` text NOT NULL,
+  `dates` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Index pour la table `competence_acquise`
+--
+ALTER TABLE `competence_acquise`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `competence` (`competence`),
+  ADD KEY `competence_acquise_ibfk_2` (`lieu`);
+
+--
+-- Index pour la table `competence_lieu`
+--
+ALTER TABLE `competence_lieu`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `competence_acquise`
+--
+ALTER TABLE `competence_acquise`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT pour la table `competence_lieu`
+--
+ALTER TABLE `competence_lieu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- Contraintes pour les tables déchargées
 --
 
 --
@@ -314,6 +373,14 @@ ALTER TABLE `competence`
 --
 ALTER TABLE `competence`
   ADD CONSTRAINT `competence_ibfk_1` FOREIGN KEY (`activite`) REFERENCES `activite` (`id`);
+COMMIT;
+
+--
+-- Contraintes pour la table `competence_acquise`
+--
+ALTER TABLE `competence_acquise`
+  ADD CONSTRAINT `competence_acquise_ibfk_1` FOREIGN KEY (`competence`) REFERENCES `competence` (`id`),
+  ADD CONSTRAINT `competence_acquise_ibfk_2` FOREIGN KEY (`lieu`) REFERENCES `competence_lieu` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
